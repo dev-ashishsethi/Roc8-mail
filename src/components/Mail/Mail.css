@@ -22,7 +22,7 @@
     color: white;
 }
 .avatar::after{
-    content: 'F';
+    content: attr(data-name);
     position: relative;
     left: 1.2rem;
     top: 11px;

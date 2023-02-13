@@ -34,7 +34,10 @@ export const Card = ({ mail }: CardProps) => {
 				dispatch(openMail(mail.id))
 				dispatch(markAsRead(mail.id))
 			}}>
-			<section className='avatar' />
+			<section
+				className='avatar'
+				data-name={mail.from?.name[0].toUpperCase()}
+			/>
 			<section
 				className={mailDetail.id !== '0' ? 'card-info desc' : 'card-info'}>
 				<p>
