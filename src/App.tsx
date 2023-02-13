@@ -1,24 +1,41 @@
-import { useEffect } from 'react';
-import './App.css';
-import { useDispatch, useSelector } from 'react-redux/es/exports';
-import { fetchInit } from './actions';
-import { initialEmail } from './reducer';
-import { AppDispatch } from './store/store';
+import { useLayoutEffect, useState } from 'react'
+import './App.css'
+import { useDispatch, useSelector } from 'react-redux/es/exports'
+import { fetchInit } from './actions'
+import { initialEmail, InitialStateType } from './reducer'
+import { AppDispatch, RootState } from './store/store'
+import { Card } from './components/Card/Card'
+import { Filter } from './components/Filter/Filter'
+import { Mail } from './components/Mail/Mail'
+import { AppState } from './store/reducer'
+import { MailBody } from './reducer/mailBodyReducer'
 
 function App() {
-	const dispatch: AppDispatch = useDispatch();
-	const res = useSelector<initialEmail[], initialEmail[]>((state) => state);
+	const dispatch: AppDispatch = useDispatch()
+	const readMail = useSelector<RootState, InitialStateType>(
+		(state) => state.readMail,
+	)
+	const mailDetail = useSelector<AppState, MailBody>(
+		(state) => state.mailDetail,
+	)
+	useLayoutEffect(() => {
+		dispatch(fetchInit())
+	}, [])
 
-	useEffect(() => {
-		dispatch(fetchInit());
-	}, []);
-
-	console.log('api call', res);
+	console.log('api call', readMail)
 	return (
 		<div className='App'>
-			<h1>ajbxkjbasxbasl</h1>
+			<Filter />
+			<section className={mailDetail.body ? `mail-section` : ''}>
+				<section className={mailDetail.body ? 'card-section' : ''}>
+					{readMail.filteredMails.map((mail) => {
+						return <Card mail={mail} key={mail.id} />
+					})}
+				</section>
+				<Mail />
+			</section>
 		</div>
-	);
+	)
 }
 
-export default App;
+export default App

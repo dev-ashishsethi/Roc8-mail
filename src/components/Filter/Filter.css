@@ -1,0 +1,18 @@
+.filter{
+    margin-right: 2rem;
+}
+.pill-badge{
+cursor: pointer;
+padding-inline: 8px;
+}
+input[type='radio']:checked+label{
+    background-color: var(--filter-badge);
+    outline: 1px solid var(--border-color);
+    border-radius: 100px;
+}
+input[type='radio']{
+    visibility: hidden;
+}
+.filter-section{
+    margin-bottom: 1rem;
+}

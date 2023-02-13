@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+:root{
+    --background-color:#F4F6FA;
+    --filter-font-color:#2F3031;
+    --favourite-read:#f2f2f2;
+    --read-card-background:#ffffff;
+    --text-color:#636363;
+    --filter-badge:#E1E4EA;
+    --border-color:#CFD2DC;
+    --accent-color:#E54065;
+    --filter-badge:#e1e5ea
+}
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Nunito';
+}
+
+.App{
+    background-color: #F4F5F9;
+    padding-block: 1rem;
+    padding-inline: 3rem;
+}
+.mail-section{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-areas: 'list-mail single-mail ';
+    column-gap: 2rem;
+}
+.card-section{
+    grid-area: list-mail;
+}

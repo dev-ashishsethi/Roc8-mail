@@ -1,0 +1,48 @@
+.card{
+    display: flex;
+    background-color: var(--favourite-read);
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+   
+}
+.card-border{
+    border:1px solid var(--accent-color)
+}
+.desc{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 20rem;
+}
+.avatar{
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    width: 3rem;
+    height: 3rem;
+    color: white;
+}
+.avatar::after{
+    content: 'F';
+    position: relative;
+    left: 1.2rem;
+    top: 11px;
+    font-weight: bold;
+}
+
+.card-info{
+    display: flex;
+    flex-direction: column;
+    margin-left: 1.5rem;
+    /* overflow: hidden;
+    text-overflow: ellipsis; */
+    /* width: 20rem; */
+}
+.date{
+    margin-right: 2rem;
+}
+.favourite{
+    color: var(--accent-color);
+}

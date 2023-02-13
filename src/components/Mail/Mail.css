@@ -1,0 +1,58 @@
+.mail{
+    background-color: var(--read-card-background);
+    width: 100%;
+    padding-block: 2rem;
+    grid-area: single-mail;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    height: fit-content;
+}
+.mail-title{
+    color: var(--text-color);
+    font-size: larger;
+}
+.title-date{
+    margin-left: 10px;
+}
+.avatar{
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    width: 3rem;
+    height: 3rem;
+    color: white;
+}
+.avatar::after{
+    content: 'F';
+    position: relative;
+    left: 1.2rem;
+    top: 11px;
+    font-weight: bold;
+}
+.mail-date{
+    color: var(--text-color);
+}
+.favourite-btn{
+background-color: var(--accent-color);
+border: unset;
+border-radius: 100px;
+padding-inline: 10px;
+padding-block: 5px;
+height: 35px;
+cursor: pointer;
+color: white;
+
+align-self: center;
+}
+.heading-avatar{
+    display: flex;
+    align-items: center;
+}
+.mail-heading{
+    display: flex;
+    justify-content: space-between;
+    margin-inline: 1rem;
+}
+.mail-body{
+    padding: 2rem;
+    text-align: justify;
+}
