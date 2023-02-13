@@ -9,6 +9,7 @@ import { Filter } from './components/Filter/Filter'
 import { Mail } from './components/Mail/Mail'
 import { AppState } from './store/reducer'
 import { MailBody } from './reducer/mailBodyReducer'
+import { Pagination } from './components/Pagination/Pagination'
 
 function App() {
 	const dispatch: AppDispatch = useDispatch()
@@ -19,13 +20,16 @@ function App() {
 		(state) => state.mailDetail,
 	)
 	useLayoutEffect(() => {
-		dispatch(fetchInit())
+		dispatch(fetchInit(1))
 	}, [])
 
 	console.log('api call', readMail)
 	return (
 		<div className='App'>
-			<Filter />
+			<section className='head'>
+				<Filter />
+				<Pagination />
+			</section>
 			<section className={mailDetail.body ? `mail-section` : ''}>
 				<section className={mailDetail.body ? 'card-section' : ''}>
 					{readMail.filteredMails.map((mail) => {

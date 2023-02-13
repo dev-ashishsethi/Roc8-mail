@@ -16,7 +16,10 @@
     padding: 0px;
     font-family: 'Nunito';
 }
-
+.head{
+    display: flex;
+    justify-content: space-between;
+}
 .App{
     background-color: #F4F5F9;
     padding-block: 1rem;

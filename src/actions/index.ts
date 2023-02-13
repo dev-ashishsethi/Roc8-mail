@@ -1,7 +1,5 @@
 import axios from 'axios'
-import { useState } from 'react'
 import { AnyAction, Dispatch } from 'redux'
-import { initialEmail } from '../reducer'
 
 export enum Fetch {
 	FETCH_INIT = 'FETCH_INIT',
@@ -11,13 +9,17 @@ export enum Fetch {
 	MAIL_BODY = 'MAIL_BODY',
 	MARK_AS_FAVOURITE = 'MARK_AS_FAVOURITE',
 	FILTER_FAVOURITE = 'FILTER_FAVOURITE',
+	REMOVE_FAVOURITE = 'REMOVE_FAVOURITE',
 }
 
-export const fetchInit = () => (dispatch: Dispatch<AnyAction>) => {
-	axios.get('https://flipkart-email-mock.now.sh/').then((res) => {
-		dispatch({ type: Fetch.FETCH_INIT, payload: res.data.list })
-	})
-}
+export const fetchInit =
+	(pagenumber: number) => (dispatch: Dispatch<AnyAction>) => {
+		axios
+			.get(`https://flipkart-email-mock.now.sh/?page=${pagenumber}`)
+			.then((res) => {
+				dispatch({ type: Fetch.FETCH_INIT, payload: res.data.list })
+			})
+	}
 
 export const unreadMail = () => (dispatch: Dispatch<AnyAction>) => {
 	return dispatch({ type: Fetch.FILTER_UNREAD })
@@ -41,4 +43,8 @@ export const favouriteFilter = () => (dispatch: Dispatch<AnyAction>) => {
 export const markAsFavourite =
 	(id: string) => (dispatch: Dispatch<AnyAction>) => {
 		return dispatch({ type: Fetch.MARK_AS_FAVOURITE, payload: id })
+	}
+export const removeFromFavourite =
+	(id: string) => (dispatch: Dispatch<AnyAction>) => {
+		return dispatch({ type: Fetch.REMOVE_FAVOURITE, payload: id })
 	}

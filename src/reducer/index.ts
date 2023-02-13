@@ -63,7 +63,7 @@ type MarkActionType = {
 	payload: string
 }
 type MarkFavouriteActionType = {
-	type: Fetch.MARK_AS_FAVOURITE
+	type: Fetch.MARK_AS_FAVOURITE | Fetch.REMOVE_FAVOURITE
 	payload: string
 }
 export const mailReducer: Reducer<
@@ -79,6 +79,7 @@ export const mailReducer: Reducer<
 				unread: true,
 				favourite: false,
 			}))
+
 			newState.filteredMails = newState.mails
 			return newState
 		}
@@ -91,12 +92,16 @@ export const mailReducer: Reducer<
 					mail.read === false &&
 					mail.favourite === false,
 			)
+
 			return newState
 		}
 		case Fetch.FILTER_READ: {
 			const newState = Object.assign({}, state)
-			newState.filteredMails = newState.mails.filter(
-				(mail) => mail.unread === false && mail.read === true,
+
+			newState.filteredMails = JSON.parse(
+				sessionStorage.getItem('readMails')!,
+			).filter(
+				(mail: initialEmail) => mail.unread === false && mail.read === true,
 			)
 			return newState
 		}
@@ -108,18 +113,17 @@ export const mailReducer: Reducer<
 						...mail,
 						read: true,
 						unread: false,
-						favourite: false,
 					}
 				}
 				return mail
 			})
+			sessionStorage.setItem('readMails', JSON.stringify(newState.mails))
 			newState.filteredMails = newState.filteredMails.map((mail) => {
 				if (mail.id == action.payload) {
 					return {
 						...mail,
 						read: true,
 						unread: false,
-						favourite: false,
 					}
 				}
 				return mail
@@ -140,7 +144,7 @@ export const mailReducer: Reducer<
 				}
 				return mail
 			})
-
+			sessionStorage.setItem('favMails', JSON.stringify(newState.mails))
 			newState.filteredMails = newState.filteredMails.map((mail) => {
 				if (mail.id === action.payload) {
 					return {
@@ -156,9 +160,33 @@ export const mailReducer: Reducer<
 		}
 		case Fetch.FILTER_FAVOURITE: {
 			const newState = Object.assign({}, state)
-			newState.filteredMails = newState.mails.filter(
-				(mail) => mail.favourite === true,
-			)
+
+			newState.filteredMails = JSON.parse(
+				sessionStorage.getItem('favMails')!,
+			).filter((mail: initialEmail) => mail.favourite === true)
+			return newState
+		}
+		case Fetch.REMOVE_FAVOURITE: {
+			const newState = Object.assign({}, state)
+			newState.mails = newState.mails.map((mail) => {
+				if (mail.id === action.payload) {
+					return {
+						...mail,
+						favourite: false,
+					}
+				}
+				return mail
+			})
+			sessionStorage.setItem('favMails', JSON.stringify(newState.mails))
+			newState.filteredMails = newState.filteredMails.map((mail) => {
+				if (mail.id === action.payload) {
+					return {
+						...mail,
+						favourite: false,
+					}
+				}
+				return mail
+			})
 			return newState
 		}
 		default:

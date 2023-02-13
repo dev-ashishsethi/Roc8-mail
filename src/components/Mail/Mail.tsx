@@ -1,33 +1,51 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { markAsFavourite } from '../../actions'
+import { markAsFavourite, removeFromFavourite } from '../../actions'
+import { InitialStateType } from '../../reducer'
 import { MailBody } from '../../reducer/mailBodyReducer'
 import { AppState } from '../../store/reducer'
-import { AppDispatch } from '../../store/store'
+import { AppDispatch, RootState } from '../../store/store'
 import './Mail.css'
 export const Mail = () => {
-	const mail = useSelector<AppState, MailBody>((state) => state.mailDetail)
+	const mailDetail = useSelector<AppState, MailBody>(
+		(state) => state.mailDetail,
+	)
+	const readMail = useSelector<RootState, InitialStateType>(
+		(state) => state.readMail,
+	)
+
+	const filterMail = () => {
+		return readMail.filteredMails.filter((mail) => mail.id === mailDetail.id)[0]
+	}
 	const dispatch = useDispatch<AppDispatch>()
 	return (
 		<>
-			{mail?.body && (
+			{mailDetail?.body && (
 				<section className='mail'>
 					<section className='mail-heading'>
 						<section className='heading-avatar'>
 							<section className='avatar' />
 							<section className='title-date'>
 								<h1 className='mail-title'>Lorem ipsum</h1>
-								<label className='mail-date'>date</label>
+								<label className='mail-date'>
+									{new Date(filterMail()?.date).toLocaleString()}
+								</label>
 							</section>
 						</section>
 						<button
 							className='favourite-btn'
-							onClick={() => dispatch(markAsFavourite(mail.id))}>
-							Mark as Favourite
+							onClick={() =>
+								filterMail()?.favourite
+									? dispatch(removeFromFavourite(mailDetail.id))
+									: dispatch(markAsFavourite(mailDetail.id))
+							}>
+							{filterMail()?.favourite
+								? 'Remove from Favourites'
+								: 'Mark as Favourite'}
 						</button>
 					</section>
 					<div
 						className='mail-body'
-						dangerouslySetInnerHTML={{ __html: mail?.body }}></div>
+						dangerouslySetInnerHTML={{ __html: mailDetail?.body }}></div>
 				</section>
 			)}
 		</>
