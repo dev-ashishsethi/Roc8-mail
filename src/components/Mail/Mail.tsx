@@ -25,7 +25,7 @@ export const Mail = () => {
 						<section className='heading-avatar'>
 							<section className='avatar' />
 							<section className='title-date'>
-								<h1 className='mail-title'>Lorem ipsum</h1>
+								<h1 className='mail-title'>{filterMail().subject}</h1>
 								<label className='mail-date'>
 									{new Date(filterMail()?.date).toLocaleString()}
 								</label>
