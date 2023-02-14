@@ -10,6 +10,7 @@ import { filterMail, MailBody } from './components/MailBody/MailBody'
 import { AppState } from './store/reducer'
 import { Mail } from './reducer/mailBodyReducer'
 import { Pagination } from './components/Pagination/Pagination'
+import { Loader } from './components/Loader/Loader'
 
 function App() {
 	const dispatch: AppDispatch = useDispatch()
@@ -18,7 +19,7 @@ function App() {
 	)
 	const mailDetail = useSelector<AppState, Mail>((state) => state.mailDetail)
 	useEffect(() => {
-		dispatch(initialMailListing(1))
+		dispatch(initialMailListing())
 	}, [])
 
 	return (
@@ -34,9 +35,13 @@ function App() {
 						: ''
 				}>
 				<section className={mailDetail.body ? 'card-section' : ''}>
-					{readMail.filteredMails.map((mail) => {
-						return <MailListingCard mail={mail} key={mail.id} />
-					})}
+					{readMail.filteredMails[0].id !== '0' ? (
+						readMail.filteredMails.map((mail) => {
+							return <MailListingCard mail={mail} key={mail.id} />
+						})
+					) : (
+						<Loader />
+					)}
 				</section>
 				<MailBody />
 			</section>

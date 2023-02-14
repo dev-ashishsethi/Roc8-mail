@@ -13,7 +13,8 @@ export enum MailListing {
 }
 
 export const initialMailListing =
-	(pagenumber: number) => (dispatch: Dispatch<AnyAction>) => {
+	(pagenumber: number = 1) =>
+	(dispatch: Dispatch<AnyAction>) => {
 		axios
 			.get(`https://flipkart-email-mock.now.sh/?page=${pagenumber}`)
 			.then((res) => {
