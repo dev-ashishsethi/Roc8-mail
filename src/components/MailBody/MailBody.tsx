@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { markAsFavourite, removeFromFavourite } from '../../actions'
-import { InitialStateType } from '../../reducer'
+import { InitialStateType } from '../../reducer/mailReducer'
 import { Mail } from '../../reducer/mailBodyReducer'
 import { AppState } from '../../store/reducer'
 import { AppDispatch, RootState } from '../../store/store'

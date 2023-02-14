@@ -1,12 +1,12 @@
 import { Reducer } from 'react'
 import { MailListing, markAsRead } from '../actions'
-import { filterFavourite } from '../utils/filterFavourite'
-import { initialFetch } from '../utils/initialFetch'
-import { markAsFavouriteUtil } from '../utils/markAsFavouriteUtil'
-import { markAsReadUtil } from '../utils/markAsRead'
-import { readFilter } from '../utils/readFilter'
-import { removeFavourite } from '../utils/removeFavourite'
-import { unreadFilter } from '../utils/unreadFilter'
+import { filterFavourite } from '../utils'
+import { initialFetch } from '../utils'
+import { markAsFavouriteUtil } from '../utils'
+import { markAsReadUtil } from '../utils'
+import { readFilter } from '../utils'
+import { removeFavourite } from '../utils'
+import { unreadFilter } from '../utils'
 
 export type InitialEmail = {
 	id: string
