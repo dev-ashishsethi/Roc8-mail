@@ -1,8 +1,8 @@
-import { initialEmail, InitialStateType } from '../reducer'
+import { InitialEmail, InitialStateType } from '../reducer'
 
 export const initialFetch = (
 	state: InitialStateType,
-	payload: initialEmail[],
+	payload: InitialEmail[],
 ) => {
 	const newState = Object.assign({}, state)
 	newState.mails = payload.map((data) => ({

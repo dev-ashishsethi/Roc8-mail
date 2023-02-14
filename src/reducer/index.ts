@@ -1,5 +1,5 @@
 import { Reducer } from 'react'
-import { Fetch, markAsRead } from '../actions'
+import { MailListing, markAsRead } from '../actions'
 import { filterFavourite } from '../utils/filterFavourite'
 import { initialFetch } from '../utils/initialFetch'
 import { markAsFavouriteUtil } from '../utils/markAsFavouriteUtil'
@@ -8,7 +8,7 @@ import { readFilter } from '../utils/readFilter'
 import { removeFavourite } from '../utils/removeFavourite'
 import { unreadFilter } from '../utils/unreadFilter'
 
-export type initialEmail = {
+export type InitialEmail = {
 	id: string
 	read: boolean
 	unread: boolean
@@ -22,75 +22,64 @@ export type initialEmail = {
 	short_description: string
 }
 export type InitialStateType = {
-	mails: initialEmail[]
-	filteredMails: initialEmail[]
+	mails: InitialEmail[]
+	filteredMails: InitialEmail[]
 }
-const inittialState: InitialStateType = {
-	mails: [
-		{
-			id: '0',
-			read: false,
-			unread: true,
-			favourite: false,
-			from: {
-				email: '',
-				name: '',
-			},
-			date: new Date(),
-			subject: '',
-			short_description: '',
-		},
-	],
-	filteredMails: [
-		{
-			id: '0',
-			read: false,
-			unread: true,
-			favourite: false,
-			from: {
-				email: '',
-				name: '',
-			},
-			date: new Date(),
-			subject: '',
-			short_description: '',
-		},
-	],
+const mockMail = {
+	id: '0',
+	read: false,
+	unread: true,
+	favourite: false,
+	from: {
+		email: '',
+		name: '',
+	},
+	date: new Date(),
+	subject: '',
+	short_description: '',
+}
+
+const initialState: InitialStateType = {
+	mails: [mockMail],
+	filteredMails: [mockMail],
 }
 export type ActionType = {
-	type: Fetch.FETCH_INIT
-	payload: initialEmail[]
+	type: MailListing.INITIAL_MAIL_LISTING
+	payload: InitialEmail[]
 }
 type FilterActionType = {
-	type: Fetch.FILTER_UNREAD | Fetch.FILTER_READ | Fetch.FILTER_FAVOURITE
-	payload: initialEmail[]
+	type:
+		| MailListing.FILTER_UNREAD
+		| MailListing.FILTER_READ
+		| MailListing.FILTER_FAVOURITE
+	payload: InitialEmail[]
 }
 type MarkActionType = {
-	type: Fetch.MARK_AS_READ
+	type: MailListing.MARK_AS_READ
 	payload: string
 }
 type MarkFavouriteActionType = {
-	type: Fetch.MARK_AS_FAVOURITE | Fetch.REMOVE_FAVOURITE
+	type: MailListing.MARK_AS_FAVOURITE | MailListing.REMOVE_FAVOURITE
 	payload: string
 }
 export const mailReducer: Reducer<
 	InitialStateType,
 	ActionType | FilterActionType | MarkActionType | MarkFavouriteActionType
-> = (state = inittialState, action) => {
+> = (state = initialState, action) => {
 	switch (action.type) {
-		case Fetch.FETCH_INIT:
+		case MailListing.INITIAL_MAIL_LISTING:
 			return initialFetch(state, action.payload)
-		case Fetch.FILTER_UNREAD:
+		case MailListing.FILTER_UNREAD:
 			return unreadFilter(state)
-		case Fetch.FILTER_READ:
+		case MailListing.FILTER_READ:
 			return readFilter(state)
-		case Fetch.MARK_AS_READ:
+		case MailListing.MARK_AS_READ:
 			return markAsReadUtil(state, action.payload)
-		case Fetch.MARK_AS_FAVOURITE:
+		case MailListing.MARK_AS_FAVOURITE:
 			return markAsFavouriteUtil(state, action.payload)
-		case Fetch.FILTER_FAVOURITE:
+		case MailListing.FILTER_FAVOURITE:
 			return filterFavourite(state)
-		case Fetch.REMOVE_FAVOURITE:
+		case MailListing.REMOVE_FAVOURITE:
 			return removeFavourite(state, action.payload)
 		default:
 			return state

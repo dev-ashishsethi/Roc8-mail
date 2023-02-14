@@ -1,13 +1,13 @@
 import { useDispatch } from 'react-redux'
 import { favouriteFilter, readMailFilter, unreadMail } from '../../actions'
 import { AppDispatch } from '../../store/store'
-import './Filter.css'
+import './FilterBar.css'
 
-export const Filter = () => {
+export const FilterBar = () => {
 	const dispatch: AppDispatch = useDispatch()
 	return (
 		<section className='filter-section'>
-			<label className='filter'>Filter:</label>
+			<label className='filter'>FilterBar:</label>
 			<input
 				type='radio'
 				id='unread'

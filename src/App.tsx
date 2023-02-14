@@ -1,14 +1,14 @@
-import { useLayoutEffect, useState } from 'react'
+import { useEffect } from 'react'
 import './App.css'
 import { useDispatch, useSelector } from 'react-redux/es/exports'
-import { fetchInit } from './actions'
-import { initialEmail, InitialStateType } from './reducer'
+import { initialMailListing } from './actions'
+import { InitialStateType } from './reducer'
 import { AppDispatch, RootState } from './store/store'
-import { Card } from './components/Card/Card'
-import { Filter } from './components/Filter/Filter'
-import { Mail } from './components/Mail/Mail'
+import { MailListingCard } from './components/MailListingCard/MailListingCard'
+import { FilterBar } from './components/FilterBar/FilterBar'
+import { filterMail, MailBody } from './components/MailBody/MailBody'
 import { AppState } from './store/reducer'
-import { MailBody } from './reducer/mailBodyReducer'
+import { Mail } from './reducer/mailBodyReducer'
 import { Pagination } from './components/Pagination/Pagination'
 
 function App() {
@@ -16,27 +16,29 @@ function App() {
 	const readMail = useSelector<RootState, InitialStateType>(
 		(state) => state.readMail,
 	)
-	const mailDetail = useSelector<AppState, MailBody>(
-		(state) => state.mailDetail,
-	)
-	useLayoutEffect(() => {
-		dispatch(fetchInit(1))
+	const mailDetail = useSelector<AppState, Mail>((state) => state.mailDetail)
+	useEffect(() => {
+		dispatch(initialMailListing(1))
 	}, [])
 
-	console.log('api call', readMail)
 	return (
 		<div className='App'>
 			<section className='head'>
-				<Filter />
+				<FilterBar />
 				<Pagination />
 			</section>
-			<section className={mailDetail.body ? `mail-section` : ''}>
+			<section
+				className={
+					mailDetail.body && filterMail(readMail, mailDetail)
+						? `mail-section`
+						: ''
+				}>
 				<section className={mailDetail.body ? 'card-section' : ''}>
 					{readMail.filteredMails.map((mail) => {
-						return <Card mail={mail} key={mail.id} />
+						return <MailListingCard mail={mail} key={mail.id} />
 					})}
 				</section>
-				<Mail />
+				<MailBody />
 			</section>
 		</div>
 	)

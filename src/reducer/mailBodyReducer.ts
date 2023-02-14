@@ -1,7 +1,7 @@
 import { Reducer } from 'react'
-import { Fetch } from '../actions'
+import { MailListing } from '../actions'
 
-export type MailBody = {
+export type Mail = {
 	id: string
 	body: string
 }
@@ -11,15 +11,15 @@ const mailInitialBody = {
 	body: '',
 }
 type MailActionType = {
-	type: Fetch.MAIL_BODY
-	payload: MailBody
+	type: MailListing.MAIL_BODY
+	payload: Mail
 }
-export const mailBodyReducer: Reducer<MailBody, MailActionType> = (
+export const mailBodyReducer: Reducer<Mail, MailActionType> = (
 	state = mailInitialBody,
 	action,
 ) => {
 	switch (action.type) {
-		case Fetch.MAIL_BODY:
+		case MailListing.MAIL_BODY:
 			return (state = action.payload)
 
 		default:
